@@ -9,3 +9,4 @@ print(df.dtypes)
 # 2. Convert SETTLEMENTDATE to datetime to allow for time-based operations
 df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'])
 
+
