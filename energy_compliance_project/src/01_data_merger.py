@@ -14,3 +14,9 @@ if len(files) > 0:
     # Combine all files into a single DataFrame
     df = pd.concat((pd.read_csv(f) for f in files), ignore_index=True)    
     print(f"Merged Shape: {df.shape}")
+
+print("\n--- DATA PREVIEW ---")
+print(df.head())
+
+print("--- COLUMN DATATYPES ---")
+print(df.dtypes)
