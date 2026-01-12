@@ -1,0 +1,23 @@
+# --- Environment ---
+venv/
+.env
+__pycache__/
+*.py[cod]
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# --- Data (Don't upload large CSVs) ---
+data/raw/
+data/processed/
+*.csv
+*.xlsx
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- OS temporary files ---
+Thumbs.db
