@@ -18,5 +18,3 @@ if len(files) > 0:
 print("\n--- DATA PREVIEW ---")
 print(df.head())
 
-print("--- COLUMN DATATYPES ---")
-print(df.dtypes)
