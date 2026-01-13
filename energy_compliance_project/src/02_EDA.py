@@ -12,24 +12,40 @@ print(df.describe())
 sns.set_theme(style="whitegrid")
 plt.rcParams['figure.figsize'] = [12,6]
 
-# --- PLOT 1: THE DUCK CURVE ---
+# --- THE DUCK CURVE ---
 plt.figure()
 sns.lineplot(data=df, x='Hour', y='TOTALDEMAND', hue='REGION', errorbar=None)
 plt.title('Average Demand Profile by Region: Identifying the Solar "Duck Curve"')
 plt.ylabel('Demand (MW)')
+plt.xticks(range(0, 24, 2))
 plt.savefig('plots/duck_curve.png')
 
-# --- PLOT 2: PRICE VOLATILITY ---
+# --- PRICE VOLATILITY ---
 plt.figure()
 # We filter RRP between -200 and 500 just to see the main distribution clearly
 sns.boxplot(data=df, x='Hour', y='RRP', showfliers=False) 
 plt.title('Hourly Price Distribution: Identifying Market Instability Windows')
 plt.savefig('plots/price_volatility.png')
 
-# --- PLOT 3: SEASONAL IMPACT ---
+# --- SEASONAL IMPACT ---
 # Create a pivot table for the heatmap
 pivot = df.groupby(['Hour', 'Month'])['Is_Negative_Price'].mean().unstack()
 plt.figure(figsize=(10, 8))
 sns.heatmap(pivot, cmap='YlOrRd', annot=False)
 plt.title('Heatmap of Negative Price Frequency (Solar Over-saturation Risk)')
 plt.savefig('plots/risk_heatmap.png')
+
+
+# --- Correlation Heatmap ---
+plt.figure(figsize=(10, 8))
+corr = df[['TOTALDEMAND', 'RRP', 'Hour', 'Month', 'DayOfWeek', 'Is_Negative_Price']].corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Feature Correlation Matrix: Identifying Drivers of Grid Stress')
+plt.savefig('plots/correlation_heatmap.png')
+
+# --- Weekday vs Weekend Profile ---
+df['Is_Weekend'] = df['DayOfWeek'].isin([5, 6])
+plt.figure()
+sns.lineplot(data=df, x='Hour', y='TOTALDEMAND', hue='Is_Weekend', errorbar=None)
+plt.title('Demand Profiles: Weekday vs. Weekend (Solar Penetration Impact)')
+plt.savefig('plots/weekday_weekend_comparison.png')
