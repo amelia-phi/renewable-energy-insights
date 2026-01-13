@@ -3,30 +3,35 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # 1. Load the merged data
-df=pd.read_csv('data/processed/demand_2021_2026.csv')
+df=pd.read_csv('data/processed/demand_processed_features.csv')
 
 # Descriptive Stat
 print(df.describe())
 
-# identify "solar saturation (negative pricing)"
-# Negative prices in the NEM are a strong proxy for solar over-supply
-df['Negative_Price_Flag'] = df['RRP'] < 0
+# set a style 
+sns.set_theme(style="whitegrid")
+plt.rcParams['figure.figsize'] = [12,6]
 
-# scatterplot matrix on selected columns
-# including Hour and Month allows you to see seasonal/daily cycles
-cols_to_compare = ['TOTALDEMAND', 'RRP', 'Hour', 'Month']
-# sample 2000 points for easy visualisation
-sns.set_theme(style="ticks")
+# --- PLOT 1: THE DUCK CURVE ---
+plt.figure()
+sns.lineplot(data=df, x='Hour', y='TOTALDEMAND', hue='REGION', errorbar=None)
+plt.title('Average Demand Profile by Region: Identifying the Solar "Duck Curve"')
+plt.ylabel('Demand (MW)')
+plt.savefig('plots/duck_curve.png')
 
-g = sns.pairplot(
-    df.sample(n=min(len(df), 20000)), 
-    vars=cols_to_compare, 
-    hue='REGION', 
-    palette='husl',
-    plot_kws={'alpha': 0.5, 's': 10} # 's' is dot size, 'alpha' is transparency
-)
+# --- PLOT 2: PRICE VOLATILITY ---
+plt.figure()
+# We filter RRP between -200 and 500 just to see the main distribution clearly
+sns.boxplot(data=df, x='Hour', y='RRP', showfliers=False) 
+plt.title('Hourly Price Distribution: Identifying Market Instability Windows')
+plt.savefig('plots/price_volatility.png')
 
-g.fig.suptitle("Comprehensive Scatterplot Matrix: Demand, Price, and Time", y=1.02)
-plt.savefig('energy_matrix.png')
-plt.show()
+# --- PLOT 3: SEASONAL IMPACT ---
+# Create a pivot table for the heatmap
+pivot = df.groupby(['Hour', 'Month'])['Is_Negative_Price'].mean().unstack()
+plt.figure(figsize=(10, 8))
+sns.heatmap(pivot, cmap='YlOrRd', annot=False)
+plt.title('Heatmap of Negative Price Frequency (Solar Over-saturation Risk)')
+plt.savefig('plots/risk_heatmap.png')
 
+print("EDA Plots generated successfully in the /plots folder!")
