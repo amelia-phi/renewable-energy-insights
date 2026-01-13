@@ -33,5 +33,3 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(pivot, cmap='YlOrRd', annot=False)
 plt.title('Heatmap of Negative Price Frequency (Solar Over-saturation Risk)')
 plt.savefig('plots/risk_heatmap.png')
-
-print("EDA Plots generated successfully in the /plots folder!")
