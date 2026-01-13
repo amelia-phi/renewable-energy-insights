@@ -6,7 +6,7 @@
 
 The transition to decentralised reneable energy has fundamentally disrupted the traditional one-way electricity distribution model. In high-penetration markets, the rapid scaling rooftop solar has introduced non-linear two-way power flows, creating significant challenges for voltafe stability and network reliability. 
 
-Traditionally, distirbution networks were built for predictable, centralised delivery; today, they function as complex, bi-directional ecosystems. This evolution has intorduced systemic complian risks, specifically volatfe breaches and thermal constraints, that vary significantly across diverse regional demographics and installation profiles. Managing these emerging risks at scale requires a shift form reactive maintenance to proactice, data-driven forecasting. By leveraging advance analytics to predict compliance failures before they occure, we aim to ensure grid safety while maximising the integration of renewable assets, to which is a critical requirement for the modern energy landscape. 
+Traditionally, distribution networks were built for predictable, centralised delivery; today, they function as complex, bi-directional ecosystems. This evolution has intorduced systemic complian risks, specifically volatfe breaches and thermal constraints, that vary significantly across diverse regional demographics and installation profiles. Managing these emerging risks at scale requires a shift form reactive maintenance to proactice, data-driven forecasting. By leveraging advance analytics to predict compliance failures before they occure, we aim to ensure grid safety while maximising the integration of renewable assets, to which is a critical requirement for the modern energy landscape. 
 
 
 #### Core Business Question
@@ -19,7 +19,11 @@ Traditionally, distirbution networks were built for predictable, centralised del
 
 
 ## Exploratory Data Analysis 
+Visually diagnose the "Solar Complaince Gap" - the window where traditional grid management fails under high renewable penetration. Our analysis would be devised into 3 different direction:
 
+1. Time (Duck Curve)
+2. Economics (Volatility)
+3. Seasonality
 
 ## Methodology
 #### Feature Engineering & Determinant Discovery
