@@ -1,29 +1,16 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 # 1. Load the merged data
 df=pd.read_csv('data/processed/demand_2021_2026.csv')
 
-# 2. Convert SETTLEMENTDATE to datetime to allow for time-based operations
-df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'])
-
-# extract Time Features (To have more columns to compare)
-df['Hour'] = df['SETTLEMENTDATE'].dt.hour
-df['Month'] = df['SETTLEMENTDATE'].dt.month
-df['DayOfWeek'] = df['SETTLEMENTDATE'].dt.dayofweek
-
-# 3. Data cleaning
-# check for missing values
-null_counts = df.isna().sum()
-print(null_counts)
-
-# check for duplicates
-duplicates = df.duplicated().sum()
-print(f"Number of duplicate rows: {duplicates}")
-
-# 4. Descriptive Stat
+# Descriptive Stat
 print(df.describe())
+
+# identify "solar saturation (negative pricing)"
+# Negative prices in the NEM are a strong proxy for solar over-supply
+df['Negative_Price_Flag'] = df['RRP'] < 0
 
 # scatterplot matrix on selected columns
 # including Hour and Month allows you to see seasonal/daily cycles
@@ -42,3 +29,4 @@ g = sns.pairplot(
 g.fig.suptitle("Comprehensive Scatterplot Matrix: Demand, Price, and Time", y=1.02)
 plt.savefig('energy_matrix.png')
 plt.show()
+
